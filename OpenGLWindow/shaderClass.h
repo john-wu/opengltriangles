@@ -1,4 +1,3 @@
-#pragma once
 #ifndef SHADER_H
 #define SHADER_H
 
@@ -65,6 +64,7 @@ public:
 		//fragment Shader
 		fragment = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragment, 1, &fShaderCode, NULL);
+		glCompileShader(fragment);
 		// print compile errors if any
 		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
 		if (!success) {
