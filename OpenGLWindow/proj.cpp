@@ -225,8 +225,8 @@ int main() {
 		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 		//projection matrix, for clipping and perspective
 		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-
+		projection = glm::perspective(glm::radians(45.0f)*(float)glfwGetTime(), 800.0f / 600.0f * (float)sin(glfwGetTime()), 0.1f, 100.0f);
+		std::cout << glm::radians(45.0f) * (float)glfwGetTime() << std::endl;
 		//locating and updating uniforms in shaders
 		int modelLoc = glGetUniformLocation(ourShader.ID, "model");
 		int viewLoc = glGetUniformLocation(ourShader.ID, "view");
