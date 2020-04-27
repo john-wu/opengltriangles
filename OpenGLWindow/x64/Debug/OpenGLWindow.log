@@ -1,5 +1,3 @@
 ﻿  glad.c
   proj.cpp
-C:\Users\haarvie dentu\source\repos\OpenGLWindow\OpenGLWindow\proj.cpp(241,13): error C2374: 'view': redefinition; multiple initialization
-C:\Users\haarvie dentu\source\repos\OpenGLWindow\OpenGLWindow\proj.cpp(232): message : see declaration of 'view'
-C:\Users\haarvie dentu\source\repos\OpenGLWindow\OpenGLWindow\proj.cpp(252,64): error C2198: 'PFNGLUNIFORMMATRIX4FVPROC': too few arguments for call
+  OpenGLWindow.vcxproj -> C:\Users\haarvie dentu\source\repos\OpenGLWindow\x64\Debug\OpenGLWindow.exe
