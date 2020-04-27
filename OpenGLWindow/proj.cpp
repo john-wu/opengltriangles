@@ -216,23 +216,24 @@ int main() {
 		ourShader.use();
 		ourShader.setFloat("mixer", mixValue);
 
-		//model matrix, flattening plane about x axis
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime()*glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
-		//view matrix, moving camera back and world forward
-		glm::mat4 view = glm::mat4(1.0f);
-		// note that we're translating the scene in the reverse direction of where we want to move
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		//projection matrix, for clipping and perspective
-		glm::mat4 projection;
-		projection = glm::perspective(glm::radians(45.0f)*(float)glfwGetTime(), 800.0f / 600.0f * (float)sin(glfwGetTime()), 0.1f, 100.0f);
-		std::cout << glm::radians(45.0f) * (float)glfwGetTime() << std::endl;
-		//locating and updating uniforms in shaders
-		int modelLoc = glGetUniformLocation(ourShader.ID, "model");
-		int viewLoc = glGetUniformLocation(ourShader.ID, "view");
-		int projectionLoc = glGetUniformLocation(ourShader.ID, "projection");
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		//vector representing positon of camera in worldspace
+		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+		//setting origin as 0 and finding direction vector to origin
+		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+		//cross product direction vector with the worldspace up vector to get horizontal right vector, normalizing for length of 1
+		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+		glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
+		//again, cross product right direction to get camera up
+		glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
+
+		//using the above vectors in a matrix, a lookAt matrix can be created for particular camera location and direction,
+		//glm provides alternative api, creating the matrix for us
+		glm::mat4 view;
+		view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f),
+		glm::vec3(0.0f, 0.0f, 0.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f));
+
 
 		glBindVertexArray(VAO);
 		for(unsigned int i = 0; i < 10; i++)
